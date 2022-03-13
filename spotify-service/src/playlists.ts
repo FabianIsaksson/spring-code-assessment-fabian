@@ -112,7 +112,44 @@ const playlistsApi = (app: Application) => {
           console.log("Response status", response.status);
         }
       } catch (e) {
-        console.error("Error fetching user playlists", e);
+        console.error("Error fetching playlist", e);
+      }
+    }
+  });
+
+  // Add item to playlist
+  app.post("/playlist-add-track", async (req, res) => {
+    const access_token = req.cookies.access_token;
+    const playlistId = req.query.id;
+    const trackUri = req.query.track;
+
+    if (playlistId && trackUri) {
+      try {
+        const response = await fetch(
+          `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: "Bearer " + access_token,
+            },
+            body: JSON.stringify({
+              uris: [trackUri],
+              position: 0,
+            }),
+          },
+        );
+
+        if (response.status === 201) {
+          const data = await response.json();
+
+          res.header("Access-Control-Allow-Credentials", "true");
+
+          res.json(data);
+        } else {
+          console.log("Response status", response);
+        }
+      } catch (e) {
+        console.error("Error adding track to playlist", e);
       }
     }
   });

@@ -72,3 +72,26 @@ export const getPlaylist = async (
 
   return data;
 };
+
+export const addTrack = async (
+  id: string | undefined,
+  trackUri: string | undefined,
+): Promise<SpotifyApi.SinglePlaylistResponse | null> => {
+  let data: SpotifyApi.SinglePlaylistResponse | null = null;
+
+  if (userIsAuthenticated() && id && trackUri) {
+    await fetch(
+      `http://localhost:4000/playlist-add-track?id=${id}&track=${trackUri}`,
+      {
+        method: "POST",
+        credentials: "include",
+      },
+    )
+      .then((r) => r.json())
+      .then((result: SpotifyApi.SinglePlaylistResponse) => {
+        data = result;
+      });
+  }
+
+  return data;
+};

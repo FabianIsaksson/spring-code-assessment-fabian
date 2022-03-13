@@ -7,7 +7,7 @@ const Playlists = ({
   userPlaylists,
   featuredPlaylists,
 }: {
-  type: "user" | "featured";
+  type: "user" | "featured" | "add";
   filter: string;
   userPlaylists?: SpotifyApi.ListOfUsersPlaylistsResponse;
   featuredPlaylists?: SpotifyApi.ListOfFeaturedPlaylistsResponse;
