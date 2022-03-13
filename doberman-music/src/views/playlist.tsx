@@ -3,6 +3,7 @@ import { addTrack, getPlaylist, getUserPlaylists } from "../api/playlists";
 import { useParams } from "react-router";
 import { ReactComponent as Heart } from "../static/icons/heart.svg";
 import { ReactComponent as Close } from "../static/icons/close.svg";
+import { ReactComponent as ArrowLeft } from "../static/icons/arrow-left.svg";
 
 const Playlist = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
   let { id } = useParams();
@@ -26,6 +27,7 @@ const Playlist = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
 
   return (
     <div>
+      <ArrowLeft onClick={() => (window.location.pathname = "/")} />
       <div>
         <input
           value={searchTerm}
