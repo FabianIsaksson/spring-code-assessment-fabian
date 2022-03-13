@@ -4,6 +4,8 @@ import Playlists from "./components/playlists";
 import { getFeaturedPlaylists, getUserPlaylists } from "./api/playlists";
 
 function App() {
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [userPlaylists, setUserPlaylists] =
     useState<SpotifyApi.ListOfUsersPlaylistsResponse | null>();
   const [featuredPlaylists, setFeaturedPlaylists] =
@@ -17,9 +19,26 @@ function App() {
   return (
     <div className="App">
       <a href="http://localhost:4000/login">Sign in</a>
-      {userPlaylists && <Playlists type="user" userPlaylists={userPlaylists} />}
+      <div>
+        <input
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onBlur={() => setSearchTerm("")}
+        ></input>
+      </div>
+      {userPlaylists && (
+        <Playlists
+          type="user"
+          userPlaylists={userPlaylists}
+          filter={searchTerm}
+        />
+      )}
       {featuredPlaylists && (
-        <Playlists type="featured" featuredPlaylists={featuredPlaylists} />
+        <Playlists
+          type="featured"
+          featuredPlaylists={featuredPlaylists}
+          filter={searchTerm}
+        />
       )}
     </div>
   );
