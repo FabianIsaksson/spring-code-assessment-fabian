@@ -1,20 +1,26 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Playlists from "./components/playlists";
-import { getUserPlaylists } from "./api/playlists";
+import { getFeaturedPlaylists, getUserPlaylists } from "./api/playlists";
 
 function App() {
-  const [playlists, setPlaylists] =
+  const [userPlaylists, setUserPlaylists] =
     useState<SpotifyApi.ListOfUsersPlaylistsResponse | null>();
+  const [featuredPlaylists, setFeaturedPlaylists] =
+    useState<SpotifyApi.ListOfFeaturedPlaylistsResponse | null>();
 
   useEffect(() => {
-    getUserPlaylists().then((result) => setPlaylists(result));
+    getUserPlaylists().then((result) => setUserPlaylists(result));
+    getFeaturedPlaylists().then((result) => setFeaturedPlaylists(result));
   }, []);
 
   return (
     <div className="App">
       <a href="http://localhost:4000/login">Sign in</a>
-      {playlists && <Playlists playlists={playlists} />}
+      {userPlaylists && <Playlists type="user" userPlaylists={userPlaylists} />}
+      {featuredPlaylists && (
+        <Playlists type="featured" featuredPlaylists={featuredPlaylists} />
+      )}
     </div>
   );
 }

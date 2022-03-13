@@ -50,16 +50,44 @@ const playlistsApi = (app: Application) => {
       );
 
       if (response.status === 200) {
-        const playlists = await response.json();
+        const data = await response.json();
 
         res.header("Access-Control-Allow-Credentials", "true");
 
-        res.json(playlists);
+        res.json(data);
       } else {
         console.log("Response status", response.status);
       }
     } catch (e) {
       console.error("Error fetching user playlists", e);
+    }
+  });
+
+  // Get spotify featured playlists
+  app.get("/featured-playlists", async (req, res) => {
+    const access_token = req.cookies.access_token;
+
+    try {
+      const response = await fetch(
+        "https://api.spotify.com/v1/browse/featured-playlists",
+        {
+          headers: {
+            Authorization: "Bearer " + access_token,
+          },
+        },
+      );
+
+      if (response.status === 200) {
+        const data = await response.json();
+
+        res.header("Access-Control-Allow-Credentials", "true");
+
+        res.json(data);
+      } else {
+        console.log("Response status", response.status);
+      }
+    } catch (e) {
+      console.error("Error fetching featured playlists", e);
     }
   });
 };
