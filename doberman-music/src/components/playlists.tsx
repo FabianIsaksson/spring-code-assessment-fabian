@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { Link } from "react-router-dom";
 
 const Playlists = ({
   type,
@@ -12,7 +13,7 @@ const Playlists = ({
   featuredPlaylists?: SpotifyApi.ListOfFeaturedPlaylistsResponse;
 }) => {
   const isUser = type === "user";
-  const isFeatured = !isUser;
+  // const isFeatured = !isUser;
 
   const userItemsFiltered = useMemo(() => {
     return userPlaylists?.items.filter((item) =>
@@ -24,18 +25,21 @@ const Playlists = ({
     return featuredPlaylists?.playlists.items.filter((item) =>
       item.name.toLowerCase().includes(filter.toLowerCase()),
     );
-  }, [userPlaylists, filter]);
+  }, [featuredPlaylists, filter]);
+
+  const filteredItems =
+    (isUser ? userItemsFiltered : featuredItemsFiltered) ?? [];
 
   return (
     <div>
       <h2>{isUser ? "My playlists" : "Featured Playlists"}</h2>
+      {filteredItems.length < 1 && <p>No playlists</p>}
       <ul>
-        {isUser &&
-          userItemsFiltered?.map((item) => <li key={item.id}>{item.name} </li>)}
-        {isFeatured &&
-          featuredItemsFiltered?.map((item) => (
-            <li key={item.id}>{item.name} </li>
-          ))}
+        {filteredItems?.map((item) => (
+          <Link key={item.id} to={`/playlist/${item.id}`}>
+            <li>{item.name} </li>
+          </Link>
+        ))}
       </ul>
     </div>
   );

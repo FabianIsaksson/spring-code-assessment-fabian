@@ -1,31 +1,16 @@
 import { Application } from "express";
 import fetch from "node-fetch";
 
-type UserData = {
-  country: string;
-  display_name: string;
-  email: string;
-  explicit_content: { filter_enabled: boolean; filter_locked: boolean };
-  external_urls: {
-    spotify: string;
-  };
-  followers: { href: string; total: number };
-  href: string;
-  id: string;
-  images: [];
-  product: string;
-  type: string;
-  uri: string;
-};
-
-const getUserData = async (access_token: string): Promise<UserData | null> => {
-  let userData: UserData | null = null;
+const getUserData = async (
+  access_token: string,
+): Promise<SpotifyApi.UserObjectPrivate | null> => {
+  let userData: SpotifyApi.UserObjectPrivate | null = null;
 
   try {
     const response = await fetch("https://api.spotify.com/v1/me", {
       headers: { Authorization: "Bearer " + access_token },
     });
-    userData = (await response.json()) as UserData;
+    userData = (await response.json()) as SpotifyApi.UserObjectPrivate;
   } catch (e) {
     console.error(e);
   }
@@ -34,6 +19,16 @@ const getUserData = async (access_token: string): Promise<UserData | null> => {
 };
 
 const playlistsApi = (app: Application) => {
+  // Get user
+  app.get("/user", async (req, res) => {
+    const access_token = req.cookies.access_token;
+    const userData = await getUserData(access_token);
+
+    res.header("Access-Control-Allow-Credentials", "true");
+
+    res.json(userData);
+  });
+
   // Get the users own playlists
   app.get("/user-playlists", async (req, res) => {
     const access_token = req.cookies.access_token;
@@ -88,6 +83,37 @@ const playlistsApi = (app: Application) => {
       }
     } catch (e) {
       console.error("Error fetching featured playlists", e);
+    }
+  });
+
+  // Get playlist
+  app.get("/playlist", async (req, res) => {
+    const access_token = req.cookies.access_token;
+    const playlistId = req.query.id;
+
+    if (playlistId) {
+      try {
+        const response = await fetch(
+          `https://api.spotify.com/v1/playlists/${playlistId}`,
+          {
+            headers: {
+              Authorization: "Bearer " + access_token,
+            },
+          },
+        );
+
+        if (response.status === 200) {
+          const data = await response.json();
+
+          res.header("Access-Control-Allow-Credentials", "true");
+
+          res.json(data);
+        } else {
+          console.log("Response status", response.status);
+        }
+      } catch (e) {
+        console.error("Error fetching user playlists", e);
+      }
     }
   });
 };

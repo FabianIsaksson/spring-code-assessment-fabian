@@ -1,47 +1,34 @@
 import { useEffect, useState } from "react";
-import "./App.css";
-import Playlists from "./components/playlists";
-import { getFeaturedPlaylists, getUserPlaylists } from "./api/playlists";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { userIsAuthenticated } from "./api/auth";
+import { getUser } from "./api/playlists";
+import Library from "./views/library";
+import Playlist from "./views/playlist";
+import SignIn from "./views/sign-in";
 
-function App() {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const [userPlaylists, setUserPlaylists] =
-    useState<SpotifyApi.ListOfUsersPlaylistsResponse | null>();
-  const [featuredPlaylists, setFeaturedPlaylists] =
-    useState<SpotifyApi.ListOfFeaturedPlaylistsResponse | null>();
+const App = () => {
+  const [user, setUser] = useState<SpotifyApi.UserObjectPrivate | null>(null);
+  const userAuthenticated = userIsAuthenticated();
 
   useEffect(() => {
-    getUserPlaylists().then((result) => setUserPlaylists(result));
-    getFeaturedPlaylists().then((result) => setFeaturedPlaylists(result));
+    if (window.location.pathname === "/" && !userAuthenticated) {
+      window.location.replace("http://localhost:3000/sign-in");
+    }
+  }, [userAuthenticated]);
+
+  useEffect(() => {
+    getUser().then((result) => setUser(result));
   }, []);
 
   return (
-    <div className="App">
-      <a href="http://localhost:4000/login">Sign in</a>
-      <div>
-        <input
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          onBlur={() => setSearchTerm("")}
-        ></input>
-      </div>
-      {userPlaylists && (
-        <Playlists
-          type="user"
-          userPlaylists={userPlaylists}
-          filter={searchTerm}
-        />
-      )}
-      {featuredPlaylists && (
-        <Playlists
-          type="featured"
-          featuredPlaylists={featuredPlaylists}
-          filter={searchTerm}
-        />
-      )}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Library user={user} />} />
+        <Route path="/playlist/:id" element={<Playlist user={user} />} />
+        <Route path="/sign-in" element={<SignIn />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
