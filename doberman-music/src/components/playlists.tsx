@@ -6,7 +6,7 @@ const Playlists = ({
   return (
     <ul>
       {playlists.items.map((item) => (
-        <li>{item.name} </li>
+        <li key={item.id}>{item.name} </li>
       ))}
     </ul>
   );

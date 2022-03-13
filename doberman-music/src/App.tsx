@@ -1,27 +1,14 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Playlists from "./components/playlists";
-import Cookies from "universal-cookie";
+import { getUserPlaylists } from "./api/playlists";
 
 function App() {
   const [playlists, setPlaylists] =
-    useState<SpotifyApi.ListOfUsersPlaylistsResponse>();
+    useState<SpotifyApi.ListOfUsersPlaylistsResponse | null>();
 
   useEffect(() => {
-    const cookies = new Cookies();
-    if (cookies.get("access_token")) {
-      fetch("http://localhost:4000/user-playlists", {
-        method: "GET",
-        credentials: "include",
-      })
-        .then((r) => r.json())
-        .then((data: SpotifyApi.ListOfUsersPlaylistsResponse) => {
-          console.log("🚀 ~ file: App.tsx ~ line 19 ~ .then ~ data", data);
-          setPlaylists(data);
-        });
-    } else {
-      console.log("User is not signed in");
-    }
+    getUserPlaylists().then((result) => setPlaylists(result));
   }, []);
 
   return (
