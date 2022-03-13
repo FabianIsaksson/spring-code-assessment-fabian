@@ -2,6 +2,9 @@
 >
 > 1. [A description of the app and how to run it locally](#doberman-music)
 > 2. [Images that show the design process](#design-artefacts)
+>
+> To run the app locally you will need to get a `CLIENT_SECRET` for communication with the spotify api.
+> And to authenticate in this service with your own account you need to be whitelisted by me (Fabian) in the Spotify Developer Console.
 
 # Code test instructions
 
@@ -22,7 +25,14 @@ The choice of technologies to solve this are up to you. How would you have solve
 A music app that let's you create playlists!
 This project has been setup using create-react-app with the typescript template.
 
+There are two parts to the service `doberman-music` which is the frontend built with React.
+And `spotify-service` which is the backend built with express.
+
 ### Local development
+
+You need to run both the frontend and the backend service locally for the app to work
+
+In separate terminals go to both ./doberman-music and ./spotify-service and run the commands below
 
 To install dependencies
 `yarn`

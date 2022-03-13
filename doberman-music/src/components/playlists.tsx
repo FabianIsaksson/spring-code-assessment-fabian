@@ -1,8 +1,13 @@
-const Playlists = () => {
+const Playlists = ({
+  playlists,
+}: {
+  playlists: SpotifyApi.ListOfUsersPlaylistsResponse;
+}) => {
   return (
     <ul>
-      <li>Item 1</li>
-      <li>Item 2</li>
+      {playlists.items.map((item) => (
+        <li>{item.name} </li>
+      ))}
     </ul>
   );
 };
