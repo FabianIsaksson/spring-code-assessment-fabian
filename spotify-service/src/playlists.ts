@@ -153,6 +153,46 @@ const playlistsApi = (app: Application) => {
       }
     }
   });
+
+  // Create playlist
+  app.post("/playlist-create", async (req, res) => {
+    const access_token = req.cookies.access_token;
+    const playlistName = req.query.name;
+    const playlistDescription = req.query.description ?? "";
+
+    const userData = await getUserData(access_token);
+
+    if (playlistName) {
+      try {
+        const response = await fetch(
+          `https://api.spotify.com/v1/users/${userData?.id}/playlists`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: "Bearer " + access_token,
+            },
+            body: JSON.stringify({
+              name: playlistName,
+              description: playlistDescription,
+              public: false,
+            }),
+          },
+        );
+
+        if (response.status === 201) {
+          const data = await response.json();
+
+          res.header("Access-Control-Allow-Credentials", "true");
+
+          res.json(data);
+        } else {
+          console.log("Response status", response);
+        }
+      } catch (e) {
+        console.error("Error adding track to playlist", e);
+      }
+    }
+  });
 };
 
 export default playlistsApi;

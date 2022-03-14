@@ -12,12 +12,9 @@
     position: relative;
     input {
       width: 100%;
-      background: colors.$secondary;
+
       height: 36px;
       padding-left: 36px;
-
-      border: none;
-      outline: none;
     }
 
     &::after {

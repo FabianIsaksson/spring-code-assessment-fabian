@@ -47,7 +47,9 @@ const Playlist = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
               <h2>{playlist.name}</h2>
               <p>{playlist.description}</p>
             </div>
-            <img src={playlist.images[0]?.url} alt="playlist" />
+            {playlist.images[0] && (
+              <img src={playlist.images[0]?.url} alt="playlist" />
+            )}
           </div>
 
           <ul className="playlist-tracklist-container">
@@ -91,7 +93,7 @@ const Playlist = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
           <div
             className="playlist-modal-content"
             onClick={(e) => {
-              e.preventDefault();
+              e.stopPropagation();
             }}
           >
             <h3>Add song to playlist</h3>
@@ -110,7 +112,9 @@ const Playlist = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
                     image={item.images[0]?.url}
                     onClick={() => {
                       addTrack(item.id, selectedTrack?.track.uri);
-                      triggerRefetch();
+                      setTimeout(() => {
+                        triggerRefetch();
+                      }, 500);
                     }}
                   />
                 ))}

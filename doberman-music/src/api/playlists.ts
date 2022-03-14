@@ -95,3 +95,26 @@ export const addTrack = async (
 
   return data;
 };
+
+export const addPlaylist = async (
+  name: string | undefined,
+  description: string | undefined,
+): Promise<SpotifyApi.CreatePlaylistResponse | null> => {
+  let data: SpotifyApi.CreatePlaylistResponse | null = null;
+
+  if (userIsAuthenticated() && name) {
+    await fetch(
+      `http://localhost:4000/playlist-create?name=${name}&description=${description}`,
+      {
+        method: "POST",
+        credentials: "include",
+      },
+    )
+      .then((r) => r.json())
+      .then((result: SpotifyApi.CreatePlaylistResponse) => {
+        data = result;
+      });
+  }
+
+  return data;
+};

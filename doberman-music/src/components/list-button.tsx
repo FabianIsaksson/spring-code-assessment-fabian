@@ -16,6 +16,7 @@ const ListButton = ({
   return (
     <li role="button" className="listbutton-button" {...buttonProps}>
       {image && <img alt="listbutton-button" src={image}></img>}
+      {!image && <div className="listbutton-placeholder"></div>}
       {name && <p className="listbutton-button-title">{name}</p>}
     </li>
   );

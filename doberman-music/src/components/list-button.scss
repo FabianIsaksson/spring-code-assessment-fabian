@@ -10,6 +10,12 @@
     }
   }
 
+  &-placeholder {
+    height: 2.5rem;
+    width: 2.5rem;
+    background: colors.$contrast;
+  }
+
   &-button {
     @include effects.scaleUpActive;
 
@@ -23,6 +29,7 @@
     & img {
       height: 100%;
     }
+
     &-title {
       margin-left: 0.5rem;
       font-size: typography.$fs-r;

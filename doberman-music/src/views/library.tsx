@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Playlists from "../components/playlists";
 import { getFeaturedPlaylists, getUserPlaylists } from "../api/playlists";
 import "./library.scss";
@@ -12,10 +12,14 @@ const Library = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
   const [featuredPlaylists, setFeaturedPlaylists] =
     useState<SpotifyApi.ListOfFeaturedPlaylistsResponse | null>();
 
-  useEffect(() => {
+  const fetch = useCallback(() => {
     getUserPlaylists().then((result) => setUserPlaylists(result));
     getFeaturedPlaylists().then((result) => setFeaturedPlaylists(result));
   }, []);
+
+  useEffect(() => {
+    fetch();
+  }, [fetch]);
 
   return (
     <div className="library-container">
@@ -36,6 +40,7 @@ const Library = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
           type="user"
           userPlaylists={userPlaylists}
           filter={searchTerm}
+          triggerRefetch={fetch}
         />
       )}
       {featuredPlaylists && (

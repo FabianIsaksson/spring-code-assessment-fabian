@@ -1,3 +1,5 @@
+@use "../styles/colors";
+
 * {
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
@@ -10,4 +12,11 @@ body {
 button {
   cursor: pointer;
   border: none;
+}
+
+input,
+textarea {
+  background: colors.$secondary;
+  border: none;
+  outline: none;
 }
