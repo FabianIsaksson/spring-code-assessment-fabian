@@ -23,9 +23,10 @@ const Library = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
         name={user?.display_name ?? ""}
         image={user?.images?.[0]?.url ?? ""}
       />
-      <div>
+      <div className="library-searchbar">
         <input
           value={searchTerm}
+          placeholder="Search..."
           onChange={(e) => setSearchTerm(e.target.value)}
           onBlur={() => setSearchTerm("")}
         ></input>

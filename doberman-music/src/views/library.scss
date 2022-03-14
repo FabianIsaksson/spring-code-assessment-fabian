@@ -7,4 +7,29 @@
     min-height: 100vh;
     padding: 1rem;
   }
+
+  &-searchbar {
+    position: relative;
+    input {
+      width: 100%;
+      background: colors.$secondary;
+      height: 36px;
+      padding-left: 36px;
+
+      border: none;
+      outline: none;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 6px;
+      background: url("../static/icons/search.svg");
+      background-repeat: no-repeat;
+      background-size: contain;
+      height: 24px;
+      width: 24px;
+    }
+  }
 }

@@ -1,0 +1,87 @@
+@use "../styles/colors";
+@use "../styles/typography";
+
+.sign-in {
+  background: colors.$primary;
+  min-height: 100vh;
+  padding: 1rem;
+
+  &-container {
+    max-width: 500px;
+    margin: auto;
+  }
+
+  &-logo {
+    position: relative;
+    display: block;
+
+    width: 220px;
+
+    margin-top: 5rem;
+    padding-left: 0.5rem;
+  }
+
+  &-button {
+    display: inline-block;
+    margin-top: 3rem;
+    margin-left: 0.5rem;
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+
+    background: colors.$contrast;
+
+    border-radius: 2px;
+    text-decoration: none;
+    color: colors.$white;
+  }
+
+  &-animation {
+    width: 100%;
+    max-width: 500px;
+    height: 100px;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+
+    &-shape {
+      margin-top: auto;
+
+      width: 72px;
+      height: 72px;
+      animation: circle-bounce 3s ease-in-out infinite;
+    }
+    &-circle {
+      border-radius: 50%;
+    }
+    &-triangle {
+      border-left: 48px solid transparent;
+      border-right: 48px solid transparent;
+
+      border-bottom: 72px solid colors.$white;
+    }
+
+    &-bottom {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes circle-bounce {
+    0% {
+      transform: translateY(0%);
+    }
+
+    50% {
+      transform: translateY(-10%);
+    }
+
+    100% {
+      transform: translateY(0%);
+    }
+  }
+}
