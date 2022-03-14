@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
+import ListButton, { ListContainer } from "./list-button";
+import "./playlists.scss";
 
 const Playlists = ({
   type,
@@ -31,16 +33,18 @@ const Playlists = ({
     (isUser ? userItemsFiltered : featuredItemsFiltered) ?? [];
 
   return (
-    <div>
-      <h2>{isUser ? "My playlists" : "Featured Playlists"}</h2>
+    <div className="playlists-container">
+      <h2 className="playlists-title">
+        {isUser ? "My playlists" : "Featured Playlists"}
+      </h2>
       {filteredItems.length < 1 && <p>No playlists</p>}
-      <ul>
+      <ListContainer>
         {filteredItems?.map((item) => (
           <Link key={item.id} to={`/playlist/${item.id}`}>
-            <li>{item.name} </li>
+            <ListButton name={item.name} image={item.images[0]?.url ?? ""} />
           </Link>
         ))}
-      </ul>
+      </ListContainer>
     </div>
   );
 };

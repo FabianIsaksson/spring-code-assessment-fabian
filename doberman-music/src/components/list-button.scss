@@ -1,0 +1,32 @@
+@use "../styles/typography";
+@use "../styles/colors";
+@use "../styles/effects";
+
+.listbutton {
+  &-container {
+    padding-left: 0;
+    a {
+      text-decoration: none;
+    }
+  }
+
+  &-button {
+    @include effects.scaleUpActive;
+
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 2.5rem;
+    margin-top: 1rem;
+
+    & img {
+      height: 100%;
+    }
+    &-title {
+      margin-left: 0.5rem;
+      font-size: typography.$fs-r;
+      color: colors.$black;
+    }
+  }
+}

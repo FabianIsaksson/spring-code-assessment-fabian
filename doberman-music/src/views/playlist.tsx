@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { addTrack, getPlaylist, getUserPlaylists } from "../api/playlists";
 import { useParams } from "react-router";
 import { ReactComponent as Heart } from "../static/icons/heart.svg";
 import { ReactComponent as Close } from "../static/icons/close.svg";
 import { ReactComponent as ArrowLeft } from "../static/icons/arrow-left.svg";
+import "./playlist.scss";
+import ListButton, { ListContainer } from "../components/list-button";
 
 const Playlist = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
   let { id } = useParams();
@@ -25,9 +27,20 @@ const Playlist = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
     getUserPlaylists().then((result) => setUserPlaylists(result));
   }, []);
 
+  const triggerRefetch = useCallback(() => {
+    getPlaylist(id).then((result) => setPlaylist(result));
+    getUserPlaylists().then((result) => setUserPlaylists(result));
+  }, [id]);
+
   return (
-    <div>
-      <ArrowLeft onClick={() => (window.location.pathname = "/")} />
+    <div className="playlist-container">
+      <button
+        onClick={() => (window.location.pathname = "/")}
+        className="playlist-backbutton"
+      >
+        <ArrowLeft />
+      </button>
+
       <div>
         <input
           value={searchTerm}
@@ -39,49 +52,75 @@ const Playlist = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
         <div>
           <h2>{playlist.name}</h2>
           <p>{playlist.description}</p>
-          <ul>
-            {playlist.tracks.items.map((item) => (
-              <li key={item.track.id}>
-                <p>{item.track.name}</p>
-                <p>{item.track.artists.map((a) => a.name).join(", ")}</p>
-                <Heart
-                  onClick={() => {
-                    setSelectedTrack(item);
-                    setShowModal(true);
-                  }}
-                />
-              </li>
-            ))}
+          <ul className="playlist-tracklist-container">
+            {playlist.tracks.items.map(
+              (item, i) =>
+                item.track && (
+                  <li
+                    className="playlist-tracklist-item"
+                    key={item.track.id + i}
+                  >
+                    <div className="playlist-tracklist-item-text">
+                      {item.track.name && (
+                        <p className="playlist-tracklist-item-text-name">
+                          {item.track.name}
+                        </p>
+                      )}
+                      <p className="playlist-tracklist-item-text-artists">
+                        {item.track.artists.map((a) => a.name).join(", ")}
+                      </p>
+                    </div>
+
+                    <Heart
+                      onClick={() => {
+                        setSelectedTrack(item);
+                        setShowModal(true);
+                      }}
+                    />
+                  </li>
+                ),
+            )}
           </ul>
         </div>
       )}
-      <div
-        style={{
-          position: "fixed",
-          background: "white",
-          bottom: 0,
-          width: "100%",
-          height: "60vh",
-          display: showModal ? "block" : "none",
-        }}
-      >
-        Add song to playlist
-        <div>
-          <Close onClick={() => setShowModal(false)} />
-
-          <ul>
-            {userPlaylists?.items?.map((item) => (
-              <li
-                onClick={() => {
-                  addTrack(item.id, selectedTrack?.track.uri);
-                }}
+      {showModal && (
+        <div
+          className="playlist-modal"
+          onClick={() => {
+            setShowModal(false);
+          }}
+        >
+          <div
+            className="playlist-modal-content"
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
+            <h3>Add song to playlist</h3>
+            <div>
+              <button
+                className="playlist-modal-closebutton"
+                onClick={() => setShowModal(false)}
               >
-                {item.name}
-              </li>
-            ))}
-          </ul>
+                <Close />
+              </button>
+              <ListContainer>
+                {userPlaylists?.items?.map((item, i) => (
+                  <ListButton
+                    key={item.id + i}
+                    name={item.name}
+                    image={item.images[0]?.url}
+                    onClick={() => {
+                      addTrack(item.id, selectedTrack?.track.uri);
+                      triggerRefetch();
+                    }}
+                  />
+                ))}
+              </ListContainer>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

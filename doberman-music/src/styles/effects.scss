@@ -1,0 +1,7 @@
+@mixin scaleUpActive {
+  transition: transform 250ms ease;
+  transform-origin: left;
+  &:active {
+    transform: scale(1.2);
+  }
+}

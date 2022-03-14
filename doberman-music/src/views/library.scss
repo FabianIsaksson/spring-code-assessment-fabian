@@ -1,0 +1,10 @@
+@use "../styles/colors";
+
+.library {
+  &-container {
+    background: colors.$primary;
+
+    min-height: 100vh;
+    padding: 1rem;
+  }
+}

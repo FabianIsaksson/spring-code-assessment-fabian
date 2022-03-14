@@ -11,7 +11,7 @@ const App = () => {
   const userAuthenticated = userIsAuthenticated();
 
   useEffect(() => {
-    if (window.location.pathname === "/" && !userAuthenticated) {
+    if (window.location.pathname !== "/sign-in" && !userAuthenticated) {
       window.location.replace("http://localhost:3000/sign-in");
     }
   }, [userAuthenticated]);

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Playlists from "../components/playlists";
 import { getFeaturedPlaylists, getUserPlaylists } from "../api/playlists";
+import "./library.scss";
 
 const Library = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,7 +17,7 @@ const Library = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
   }, []);
 
   return (
-    <div className="App">
+    <div className="library-container">
       <p>{user?.display_name}</p>
       <div>
         <input
