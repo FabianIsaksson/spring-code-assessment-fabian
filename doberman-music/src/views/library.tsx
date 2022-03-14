@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Playlists from "../components/playlists";
 import { getFeaturedPlaylists, getUserPlaylists } from "../api/playlists";
 import "./library.scss";
+import Avatar from "../components/avatar";
 
 const Library = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,7 +19,10 @@ const Library = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
 
   return (
     <div className="library-container">
-      <p>{user?.display_name}</p>
+      <Avatar
+        name={user?.display_name ?? ""}
+        image={user?.images?.[0]?.url ?? ""}
+      />
       <div>
         <input
           value={searchTerm}

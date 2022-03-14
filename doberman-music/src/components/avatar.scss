@@ -1,0 +1,26 @@
+@use "../styles/typography";
+@use "../styles/colors";
+
+.avatar {
+  display: flex;
+  align-items: center;
+
+  &-image {
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+  }
+
+  &-name {
+    margin-left: 0.5rem;
+    font-size: typography.$fs-r;
+    font-weight: typography.$fw-b;
+  }
+
+  &-fallbackimage {
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+    background-color: colors.$gray;
+  }
+}
