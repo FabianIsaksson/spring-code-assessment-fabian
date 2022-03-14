@@ -32,12 +32,21 @@ And `spotify-service` which is the backend built with express.
 
 You need to run both the frontend and the backend service locally for the app to work
 
-In separate terminals go to both ./doberman-music and ./spotify-service and run the commands below
+#### Frontend
 
-To install dependencies
+Go to `./doberman-music`.
+
+Run in terminal:
 `yarn`
+`yarn start`
 
-Running the app in dev-mode
+#### Backend
+
+Go to `./spotify-service`.
+Copy the contents of the file `.sample.env` to a new file called `.env` and paste the client secret in the corresponding environment variable field (`CLIENT_SECRET`).
+
+Run in terminal:
+`yarn`
 `yarn start`
 
 ## Design artefacts
