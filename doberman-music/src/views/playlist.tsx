@@ -12,7 +12,6 @@ const Playlist = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
   const [selectedTrack, setSelectedTrack] =
     useState<SpotifyApi.PlaylistTrackObject>();
   const [showModal, setShowModal] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
 
   const [userPlaylists, setUserPlaylists] =
     useState<SpotifyApi.ListOfUsersPlaylistsResponse | null>();
@@ -41,13 +40,6 @@ const Playlist = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
         <ArrowLeft />
       </button>
 
-      <div>
-        <input
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          onBlur={() => setSearchTerm("")}
-        ></input>
-      </div>
       {playlist && (
         <div>
           <h2>{playlist.name}</h2>
