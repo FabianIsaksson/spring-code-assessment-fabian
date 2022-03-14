@@ -10,6 +10,17 @@
     padding: 1rem;
   }
 
+  &-header {
+    display: flex;
+    align-items: center;
+
+    img {
+      margin-left: auto;
+      height: 100px;
+      width: 100px;
+    }
+  }
+
   &-tracklist {
     &-container {
       margin-top: 2rem;

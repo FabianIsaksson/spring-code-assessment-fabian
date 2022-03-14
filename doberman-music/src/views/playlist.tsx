@@ -42,8 +42,14 @@ const Playlist = ({ user }: { user: SpotifyApi.UserObjectPrivate | null }) => {
 
       {playlist && (
         <div>
-          <h2>{playlist.name}</h2>
-          <p>{playlist.description}</p>
+          <div className="playlist-header">
+            <div>
+              <h2>{playlist.name}</h2>
+              <p>{playlist.description}</p>
+            </div>
+            <img src={playlist.images[0]?.url} alt="playlist" />
+          </div>
+
           <ul className="playlist-tracklist-container">
             {playlist.tracks.items.map(
               (item, i) =>
