@@ -58,10 +58,12 @@ const Playlists = ({
           </Link>
         ))}
       </ListContainer>
-      <button className="playlists-add" onClick={() => setShowModal(true)}>
-        <Plus />
-        <span>Add playlist</span>
-      </button>
+      {isUser && (
+        <button className="playlists-add" onClick={() => setShowModal(true)}>
+          <Plus />
+          <span>Add playlist</span>
+        </button>
+      )}
       {showModal && (
         <div
           className="playlists-modal"
