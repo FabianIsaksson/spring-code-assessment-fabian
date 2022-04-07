@@ -2,7 +2,7 @@
 
 > I have added the following sections to the readme
 >
-> 1. [A description of the app and how to run it locally](#doberman-music)
+> 1. [A description of the app and how to run it locally](#spring-music)
 > 2. [Images that show the design process](#design-artefacts)
 >
 > Since I have had limited time for this code test, the app is not responsively styled. I ask that you use dev-tools device emulation when viewing the app (preferably IPhone XR dimensions but any phone screen size should work).
@@ -28,12 +28,12 @@ The choice of technologies to solve this are up to you. How would you have solve
 - CSS methodologies
 - Code design patterns and architecture
 
-## Doberman Music
+## Spring Music
 
 A music app that let's you add songs to your existing playlists!
 The frontend part of the app has been setup using create-react-app with the typescript template.
 
-There are two parts to the service `doberman-music` which is the frontend built with React.
+There are two parts to the service `spring-music` which is the frontend built with React.
 And `spotify-service` which is the backend built with express.
 
 ### Local development / testing
@@ -46,7 +46,7 @@ You need to run both the frontend and the backend service locally for the app to
 
 #### Frontend
 
-Go to `./doberman-music`.
+Go to `./spring-music`.
 
 Run in terminal:
 
@@ -84,7 +84,7 @@ $ npm run start
 ## Design artefacts
 
 **UI design from figma**
-![FIGMA](doberman-music-figma-design.png)
+![FIGMA](spring-music-figma-design.png)
 
 **Early skethes**
 ![SKETCH1](sketch1.png)

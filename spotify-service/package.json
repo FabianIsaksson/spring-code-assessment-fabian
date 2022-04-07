@@ -1,7 +1,7 @@
 {
   "name": "spotify-auth-service",
   "version": "1.0.0",
-  "description": "An auth service used with doberman-music",
+  "description": "An auth service used with spring-music",
   "scripts": {
     "start": "nodemon ./src/index.ts"
   },
