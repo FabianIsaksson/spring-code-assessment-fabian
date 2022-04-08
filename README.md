@@ -7,8 +7,8 @@
 >
 > Since I have had limited time for this code test, the app is not responsively styled. I ask that you use dev-tools device emulation when viewing the app (preferably IPhone XR dimensions but any phone screen size should work).
 >
-> NOTE: To run the app locally you will need the `CLIENT_SECRET` for communication with the spotify api, I sent this in an email to Jonas so reach out to him to get that.
-> And to authenticate in this service with your own spotify-account you need to be whitelisted by me (Fabian) in the Spotify Developer Console, please send me or Jonas your profile name on Spotify and the email adress for your account.
+> NOTE: To run the app locally you will need the `CLIENT_SECRET` for communication with the spotify api.
+> And to authenticate in this service with your own spotify-account you need to be whitelisted by me (Fabian) in the Spotify Developer Console, please send me your profile name on Spotify and the email adress for your account.
 >
 > fabi.isak@gmail.com
 >
